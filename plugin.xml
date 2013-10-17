@@ -133,8 +133,18 @@ xmlns:android="http://schemas.android.com/apk/res/android"
           <merges target="" />
         </js-module>
     </platform>
-    
-    <!-- firefoxos -->
+
+    <!-- windows81 -->
+    <platform name="windows81">
+      <config-file target="package.appxmanifest" parent="/Package/Capabilities">
+        <DeviceCapability Name="location" />
+      </config-file>
+      <js-module src="src/windows81/GeolocationProxy.js" name="GeolocationProxy">
+        <merges target="" />
+      </js-module>
+    </platform>
+
+  <!-- firefoxos -->
     <platform name="firefoxos">
         <config-file target="config.xml" parent="/*">
             <feature name="Geolocation">
