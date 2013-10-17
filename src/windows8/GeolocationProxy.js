@@ -48,6 +48,18 @@ function createErrorCode() {
             break;
     }
 }
+function createResult(pos) {
+    return {
+        latitude: pos.coordinate.latitude,
+        longitude: pos.coordinate.longitude,
+        altitude: pos.coordinate.altitude,
+        accuracy: pos.coordinate.accuracy,
+        heading: pos.coordinate.heading,
+        velocity: pos.coordinate.speed,
+        altitudeAccuracy: pos.coordinate.altitudeAccuracy,
+        timestamp: pos.coordinate.timestamp
+    };
+}
 
 module.exports = {
     getLocation: function (success, fail, args, env) {
@@ -65,16 +77,7 @@ module.exports = {
 
             loc.getGeopositionAsync().then(
                 function (pos) {
-                    success({
-                        latitude: pos.coordinate.latitude,
-                        longitude: pos.coordinate.longitude,
-                        altitude: pos.coordinate.altitude,
-                        accuracy: pos.coordinate.accuracy,
-                        heading: pos.coordinate.heading,
-                        velocity: pos.coordinate.speed,
-                        altitudeAccuracy: pos.coordinate.altitudeAccuracy,
-                        timestamp: pos.coordinate.timestamp
-                    });
+                    success(getResult(pos));
                 },
                 function (err) {
                     fail({
@@ -99,16 +102,7 @@ module.exports = {
             highAccuracy = args[1],
 
             onPositionChanged = function (e) {
-                success({
-                    latitude: e.position.coordinate.latitude,
-                    longitude: e.position.coordinate.longitude,
-                    altitude: e.position.coordinate.altitude,
-                    accuracy: e.position.coordinate.accuracy,
-                    heading: e.position.coordinate.heading,
-                    velocity: e.position.coordinate.speed,
-                    altitudeAccuracy: e.position.coordinate.altitudeAccuracy,
-                    timestamp: e.position.coordinate.timestamp
-                });
+                success(getResult(e.position));
             },
 
             onStatusChanged = function (e) {
